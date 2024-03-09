@@ -1,0 +1,33 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Place {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  type    String
+  name    String
+  city    String
+  zipCode String
+  country String
+
+  price        Float?
+  averagePrice Int?
+  freeAccess   Boolean?
+  imageUrl     String?
+
+  kitchenType String?
+  starCount   Int?
+
+  artType     String?
+  artMovement String?
+
+  barType String?
+
+  parkType String?
+  public   Boolean?
+}
