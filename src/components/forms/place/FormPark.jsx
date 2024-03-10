@@ -1,7 +1,12 @@
 import Button from "@/components/Button"
 import ListBox from "@/components/ListBox"
 import Toggle from "@/components/Toggle"
-import { FORM_INIT_BASE_PLACE, PARK_TYPE_OPTION, PLACE_TYPE } from "@/constants"
+import {
+  FORM_INIT_BASE_PLACE,
+  PARK_TYPE_OPTION,
+  PLACE_AVERAGE_PRICE_OPTION,
+  PLACE_TYPE,
+} from "@/constants"
 import { parkSchema } from "@/validators"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Form, Formik } from "formik"
@@ -56,12 +61,23 @@ const FormPark = () => {
           </div>
 
           {!values.freeAccess && (
-            <FormikInput
-              label="Prix"
-              type="text"
-              name="price"
-              placeholder="Prix"
-            />
+            <>
+              <FormikInput
+                label="Prix"
+                type="text"
+                name="price"
+                placeholder="Prix"
+              />
+
+              <ListBox
+                label="Prix moyen"
+                options={PLACE_AVERAGE_PRICE_OPTION}
+                value={values.averagePrice}
+                onChange={(newValue) =>
+                  setFieldValue("averagePrice", newValue.value)
+                }
+              />
+            </>
           )}
 
           <div className="flex justify-end mt-3">

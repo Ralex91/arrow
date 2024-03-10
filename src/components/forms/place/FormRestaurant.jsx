@@ -48,7 +48,7 @@ const FormRestaurant = () => {
             name="starCount"
             placeholder="Nombre d'étoiles"
             min="1"
-            max="3"
+            max="5"
           />
           <ListBox
             label="Prix moyen"

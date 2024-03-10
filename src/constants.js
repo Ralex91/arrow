@@ -39,7 +39,7 @@ export const PLACE_TYPE_OPTION = [
   { label: "Restaurant", value: "restaurant" },
   { label: "Musé", value: "museum" },
   { label: "Bar", value: "bar" },
-  { label: "Park", value: "park" },
+  { label: "Parc", value: "park" },
 ]
 
 export const PLACE_AVERAGE_PRICE_OPTION = [

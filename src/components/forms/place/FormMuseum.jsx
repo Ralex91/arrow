@@ -5,6 +5,7 @@ import {
   ART_MOUEVEMENT_OPTION,
   ART_TYPE_OPTION,
   FORM_INIT_BASE_PLACE,
+  PLACE_AVERAGE_PRICE_OPTION,
   PLACE_TYPE,
 } from "@/constants"
 import { museumSchema } from "@/validators"
@@ -60,12 +61,22 @@ const FormMuseum = () => {
             <p>Gratuit</p>
           </div>
           {!values.freeAccess && (
-            <FormikInput
-              label="Prix"
-              type="text"
-              name="price"
-              placeholder="Prix"
-            />
+            <>
+              <FormikInput
+                label="Prix"
+                type="text"
+                name="price"
+                placeholder="Prix"
+              />
+              <ListBox
+                label="Prix moyen"
+                options={PLACE_AVERAGE_PRICE_OPTION}
+                value={values.averagePrice}
+                onChange={(newValue) =>
+                  setFieldValue("averagePrice", newValue.value)
+                }
+              />
+            </>
           )}
 
           <div className="flex justify-end mt-3">

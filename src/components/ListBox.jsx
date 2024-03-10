@@ -12,7 +12,13 @@ const ListBox = ({
   onChange,
   ...otherProps
 }) => {
-  const selectedItem = value ? options.find((o) => o.value === value) : selected
+  let selectedItem = null
+
+  if (value) {
+    selectedItem = options.find((o) => o.value === value)
+  } else if (selected) {
+    selectedItem = selected
+  }
 
   return (
     <div>
@@ -21,7 +27,7 @@ const ListBox = ({
       <Listbox value={selectedItem} onChange={onChange} {...otherProps}>
         <div className="relative">
           <Listbox.Button className="p-2 rounded-md outline-none active:border-red-600 border border-gray-200 w-full text-left flex justify-between items-center">
-            {selectedItem?.label}
+            {selectedItem?.label ?? "Selectioner un options"}
             <ChevronDownIcon />
           </Listbox.Button>
           <Listbox.Options className="absolute bg-white z-20 w-full rounded-md border border-gray-200 max-h-32 overflow-y-auto">
