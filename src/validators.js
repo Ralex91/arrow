@@ -1,120 +1,76 @@
 import * as yup from "yup"
 import {
+  ART_MOUEVEMENT,
+  ART_TYPE,
+  BAR_TYPE,
+  KITCHEN_TYPE,
+  PARK_TYPE,
   PLACE_TYPE,
-  artMovementOptions,
-  artTypeOptions,
-  barTypeOptions,
-  kitchenTypeOptions,
-  parkTypeOptions,
 } from "./constants"
 
-const basePlaceSchema = {
-  name: yup.string().min(10).required(),
+export const basePlaceSchema = {
+  name: yup.string().required(),
+  address: yup.string().required(),
   city: yup.string().required(),
-  zipCode: yup.string().required(),
+  zipCode: yup.number().required(),
   country: yup.string().required(),
 }
-const restaurantSchema = yup.object().shape({
+
+export const priceSchema = yup.number().when("freeAccess", {
+  is: true,
+  then: (schema) => schema.notRequired(),
+  otherwise: (schema) => schema.required().min(1).max(5),
+})
+
+export const restaurantSchema = yup.object().shape({
   ...basePlaceSchema,
   type: yup.string().required().oneOf([PLACE_TYPE.restaurant]),
-  kitchenType: yup.string().required().oneOf(kitchenTypeOptions),
-  starCount: yup.number().required().min(1).max(3).integer(),
+  kitchenType: yup.string().required().oneOf(KITCHEN_TYPE),
+  starCount: yup.number().required().min(1).max(5).integer(),
   averagePrice: yup.number().required().min(1).max(5).integer(),
 })
-const museumSchema = yup.object().shape({
+
+export const museumSchema = yup.object().shape({
   ...basePlaceSchema,
   type: yup.string().required().oneOf([PLACE_TYPE.museum]),
-  artMovement: yup.string().required().oneOf(artMovementOptions),
-  artType: yup.string().required().oneOf(artTypeOptions),
+  artMovement: yup.string().required().oneOf(ART_MOUEVEMENT),
+  artType: yup.string().required().oneOf(ART_TYPE),
   freeAccess: yup.boolean(),
-  price: yup.number().when("freeAccess", {
-    is: true,
-    then: yup.number().notRequired(),
-    otherwise: yup.number().required().min(1).max(5),
-  }),
+  price: priceSchema,
 })
-const barSchema = yup.object().shape({
+
+export const barSchema = yup.object().shape({
   ...basePlaceSchema,
   type: yup.string().required().oneOf([PLACE_TYPE.bar]),
-  barType: yup.string().required().oneOf(barTypeOptions),
+  barType: yup.string().required().oneOf(BAR_TYPE),
   averagePrice: yup.number().required().min(1).max(5).integer(),
 })
-const parkSchema = yup.object().shape({
+
+export const parkSchema = yup.object().shape({
   ...basePlaceSchema,
   type: yup.string().required().oneOf([PLACE_TYPE.park]),
-  parkType: yup.string().required().oneOf(parkTypeOptions),
+  parkType: yup.string().required().oneOf(PARK_TYPE),
   public: yup.boolean(),
   freeAccess: yup.boolean(),
-  price: yup.number().when("freeAccess", {
-    is: true,
-    then: yup.number().notRequired(),
-    otherwise: yup.number().required().min(1).max(5),
-  }),
+  price: priceSchema,
 })
 
-export const getPlaceSchema = (placeType) => {
-  console.log(placeType)
-  let specificPlaceSchema = null
-
-  switch (placeType) {
-    case PLACE_TYPE.restaurant:
-      specificPlaceSchema = restaurantSchema
-
-      break
-
-    case PLACE_TYPE.museum:
-      specificPlaceSchema = museumSchema
-
-      break
-
-    case PLACE_TYPE.bar:
-      specificPlaceSchema = barSchema
-
-      break
-
-    case PLACE_TYPE.park:
-      specificPlaceSchema = parkSchema
-
-      break
-
-    default:
-      throw new Error("Invalid place type")
-  }
-
-  return specificPlaceSchema
+export const placeSchemas = {
+  [PLACE_TYPE.restaurant]: restaurantSchema,
+  [PLACE_TYPE.museum]: museumSchema,
+  [PLACE_TYPE.bar]: barSchema,
+  [PLACE_TYPE.park]: parkSchema,
 }
 
-export const validatorPlace = async (data) => {
-  let validatedData = null
+export const getPlaceSchema = async (data) => {
+  if (Object.hasOwn(placeSchemas, data.type)) {
+    const validatedData = await placeSchemas[data.type].validate(data, {
+      abortEarly: false,
+      stripUnknown: true,
+    })
 
-  switch (data.type) {
-    case PLACE_TYPE.restaurant:
-      validatedData = await restaurantSchema.validate(data, {
-        abortEarly: false,
-      })
-
-      break
-
-    case PLACE_TYPE.museum:
-      validatedData = await museumSchema.validate(data, { abortEarly: false })
-
-      break
-
-    case PLACE_TYPE.bar:
-      validatedData = await barSchema.validate(data, { abortEarly: false })
-
-      break
-
-    case PLACE_TYPE.park:
-      validatedData = await parkSchema.validate(data, { abortEarly: false })
-
-      break
-
-    default:
-      throw new Error("Invalid place type")
+    return validatedData
   }
 
-  return validatedData
+  throw new Error("Invalid place type")
 }
-
-export { barSchema, museumSchema, parkSchema, restaurantSchema }

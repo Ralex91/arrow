@@ -3,6 +3,7 @@ import "@/styles/globals.css"
 import clsx from "clsx"
 import { Inter } from "next/font/google"
 
+// eslint-disable-next-line new-cap
 const inter = Inter({ subsets: ["latin"] })
 
 export default function App({ Component, pageProps }) {

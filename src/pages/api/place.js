@@ -1,5 +1,5 @@
-import { createTodo, getPlaces } from "@/db/crud"
-import { validatorPlace } from "@/validators"
+import { addPlace, getPlaces } from "@/db/crud"
+import { getPlaceSchema } from "@/validators"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
@@ -14,8 +14,8 @@ const handle = async (req, res) => {
   if (req.method === "POST") {
     try {
       const rawData = req.body
-      const data = await validatorPlace(rawData)
-      const newPlace = await createTodo(data)
+      const data = await getPlaceSchema(rawData)
+      const newPlace = await addPlace(data)
 
       res.send(newPlace)
 
@@ -23,9 +23,11 @@ const handle = async (req, res) => {
     } catch (error) {
       if (error instanceof yup.ValidationError) {
         res.status(400).send({ error: error.errors })
+
+        return
       }
 
-      throw error
+      res.status(400).send({ error: "Bad request" })
     }
   }
 

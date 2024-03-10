@@ -1,11 +1,15 @@
 import Card from "@/components/Card"
 import { SewingPinFilledIcon } from "@radix-ui/react-icons"
+import Image from "next/image"
 import Link from "next/link"
 
 const Place = () => (
   <Link href="/palce/id">
     <Card className="overflow-hidden hover:-translate-x-1 hover:-translate-y-1 transition-all hover:shadow-[0.25rem_0.25rem] hover:shadow-red-600">
-      <img
+      <Image
+        alt={`Preview`}
+        width="100"
+        height="100"
         src="https://placehold.co/600x400"
         className="w-full object-cover h-48"
       />
