@@ -30,7 +30,7 @@ const ListBox = ({
             {selectedItem?.label ?? "Selectioner un options"}
             <ChevronDownIcon />
           </Listbox.Button>
-          <Listbox.Options className="absolute bg-white z-20 w-full rounded-md border border-gray-200 max-h-32 overflow-y-auto">
+          <Listbox.Options className="absolute bg-white z-20 w-full rounded-md border border-gray-200 max-h-52 overflow-y-auto">
             {options.map((option) => (
               <Listbox.Option
                 className={({ active }) =>

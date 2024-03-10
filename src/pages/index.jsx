@@ -153,7 +153,7 @@ const Home = () => {
           </div>
         </Card>
 
-        <div className="flex-1">
+        <div className="w-full md:flex-1">
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
             Résultats de votre recherche
             <span className="text-sm font-normal p-1 rounded-md bg-red-600 text-white">

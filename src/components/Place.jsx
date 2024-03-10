@@ -1,5 +1,5 @@
 import Card from "@/components/Card"
-import { SewingPinFilledIcon } from "@radix-ui/react-icons"
+import { SewingPinFilledIcon, StarFilledIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -14,17 +14,17 @@ const Place = () => (
         className="w-full object-cover h-48"
       />
       <div className="p-2">
-        <p className="text-lg font-bold line-clamp">Lieux 1</p>
+        <div className="flex justify-between">
+          <p className="text-lg font-bold line-clamp">Lieux 1</p>
+
+          <p className="flex gap-1 items-center">
+            <StarFilledIcon className="w-5 h-auto" /> 4.5
+          </p>
+        </div>
         <p className="text-red-600 flex gap-2 items-center">
           <SewingPinFilledIcon /> Address 515151, 5454
         </p>
-        <p className="text-gray-600 line-clamp-3 break-all">
-          Lorem
-          LoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLorem
-          LoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLorem
-          LoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLorem
-          LoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLoremLorem
-        </p>
+        <p className="font-medium">20 €</p>
       </div>
     </Card>
   </Link>

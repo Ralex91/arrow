@@ -11,9 +11,9 @@ const Create = () => {
   const [placeType, setPlaceType] = useState(PLACE_TYPE_OPTION[0].value)
 
   return (
-    <main>
+    <main className="w-[500px] mx-auto">
       <h2 className="text-3xl font-bold mb-4">Ajouter un lieux</h2>
-      <Card className="flex flex-col p-2 gap-2 w-[500px]">
+      <Card className="flex flex-col p-2 gap-2">
         <ListBox
           options={PLACE_TYPE_OPTION}
           value={placeType}
