@@ -1,8 +1,11 @@
 import { addPlace, getPlaces } from "@/db/crud"
-import { getPlaceSchema } from "@/validators"
+import dbConnect from "@/libs/dbConnect"
+import { placeSchema } from "@/validators"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
+  await dbConnect()
+
   if (req.method === "GET") {
     const places = await getPlaces()
 
@@ -14,7 +17,7 @@ const handle = async (req, res) => {
   if (req.method === "POST") {
     try {
       const rawData = req.body
-      const data = await getPlaceSchema(rawData)
+      const data = await placeSchema.validate(rawData)
       const newPlace = await addPlace(data)
 
       res.send(newPlace)
@@ -27,6 +30,7 @@ const handle = async (req, res) => {
         return
       }
 
+      console.error(error)
       res.status(400).send({ error: "Bad request" })
     }
   }

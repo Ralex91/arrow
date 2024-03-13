@@ -4,11 +4,16 @@ import FormBar from "@/components/forms/place/FormBar"
 import FormMuseum from "@/components/forms/place/FormMuseum"
 import FormPark from "@/components/forms/place/FormPark"
 import FormRestaurant from "@/components/forms/place/FormRestaurant"
+import axios from "axios"
 import { useState } from "react"
 import { PLACE_TYPE_OPTION } from "../constants"
 
 const Create = () => {
   const [placeType, setPlaceType] = useState(PLACE_TYPE_OPTION[0].value)
+  const handleSubmit = async (data) => {
+    const res = await axios.post("http://localhost:3000/api/place", data)
+    console.log(res)
+  }
 
   return (
     <main className="w-[500px] mx-auto">
@@ -20,10 +25,12 @@ const Create = () => {
           onChange={(newValue) => setPlaceType(newValue.value)}
         />
 
-        {placeType === "restaurant" && <FormRestaurant />}
-        {placeType === "museum" && <FormMuseum />}
-        {placeType === "bar" && <FormBar />}
-        {placeType === "park" && <FormPark />}
+        {placeType === "restaurant" && (
+          <FormRestaurant onSubmit={handleSubmit} />
+        )}
+        {placeType === "museum" && <FormMuseum onSubmit={handleSubmit} />}
+        {placeType === "bar" && <FormBar onSubmit={handleSubmit} />}
+        {placeType === "park" && <FormPark onSubmit={handleSubmit} />}
       </Card>
     </main>
   )

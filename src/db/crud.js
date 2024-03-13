@@ -1,32 +1,28 @@
-import prisma from "@/db/prisma.js"
+import { PlaceModel } from "./models/PlaceModel"
 
 export const addPlace = async (data) => {
-  const createdPlace = await prisma.place.create({
-    data,
-  })
-
-  return createdPlace
-}
-
-export const getPlaces = async () => await prisma.place.findMany()
-
-export const getPlace = async (placeId) =>
-  await prisma.place.findUnique({
-    where: { id: placeId },
-  })
-
-export const updatePlace = async (todoId, data) => {
-  const newPlace = await prisma.place.update({
-    where: { id: todoId },
-    data,
-  })
+  const newPlace = new PlaceModel(data)
+  await newPlace.save()
 
   return newPlace
 }
-export const deletePlace = async (todoId) => {
-  const place = await prisma.place.delete({
-    where: { id: todoId },
-  })
+
+export const getPlaces = async () => await PlaceModel.find()
+
+export const getPlace = async (placeId) => await PlaceModel.findById(placeId)
+
+export const updatePlace = async (placeId, data) => {
+  const place = await PlaceModel.findById(placeId).lean()
+
+  Object.assign(place, data)
+
+  const updatedPlace = new PlaceModel(place)
+  await updatedPlace.save()
+
+  return updatedPlace
+}
+export const deletePlace = async (placeID) => {
+  const place = await PlaceModel.findOneAndDelete({ _id: placeID })
 
   if (!place) {
     return null
