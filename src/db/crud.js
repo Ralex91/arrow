@@ -7,7 +7,7 @@ export const addPlace = async (data) => {
   return newPlace
 }
 
-export const getPlaces = async () => await PlaceModel.find()
+export const getPlaces = async (query) => await PlaceModel.find(query)
 
 export const getPlace = async (placeId) => await PlaceModel.findById(placeId)
 

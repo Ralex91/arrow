@@ -13,10 +13,12 @@ import {
   PLACE_TYPE,
   PLACE_TYPE_OPTION,
 } from "@/constants"
+import axios from "axios"
 import { useEffect, useState } from "react"
 
 const HAS_FREE_ACCESS = [PLACE_TYPE.museum, PLACE_TYPE.park]
 const Home = () => {
+  const [places, setPlaces] = useState([])
   const [placeType, setPlaceType] = useState(PLACE_TYPE_OPTION[0].value)
   const [filter, setFilter] = useState({
     type: PLACE_TYPE_OPTION[0].value,
@@ -30,6 +32,12 @@ const Home = () => {
         ? { ...prev, [placeType]: { ...prev[placeType], [key]: value } }
         : { ...prev, ...value },
     )
+  const fetchPlaces = () =>
+    axios.get("/api/place").then(({ data }) => setPlaces(data))
+
+  useEffect(() => {
+    fetchPlaces()
+  }, [])
 
   useEffect(() => {
     console.log(filter)
@@ -133,14 +141,14 @@ const Home = () => {
             {HAS_FREE_ACCESS.includes(placeType) && (
               <div className="flex items-center gap-4">
                 <Toggle
-                  enabled={filter[placeType]?.freeAccess}
-                  onChange={(enable) => updatePlaceFilter("freeAccess", enable)}
+                  enabled={filter[placeType]?.isFree}
+                  onChange={(enable) => updatePlaceFilter("isFree", enable)}
                 />
                 <p>Gratuit</p>
               </div>
             )}
 
-            {!filter[placeType]?.freeAccess && (
+            {!filter[placeType]?.isFree && (
               <ListBox
                 label="Prix moyen"
                 options={PLACE_AVERAGE_PRICE_OPTION}
@@ -157,20 +165,13 @@ const Home = () => {
           <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
             Résultats de votre recherche
             <span className="text-sm font-normal p-1 rounded-md bg-red-600 text-white">
-              999 résultats
+              {places.length} résultats
             </span>
           </h2>
           <div className="grid grid-cols-1 gap-2 justify-start lg:grid-cols-2">
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
-            <Place />
+            {places.map((place, key) => (
+              <Place key={key} data={place} />
+            ))}
           </div>
         </div>
       </div>

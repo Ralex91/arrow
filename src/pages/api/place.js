@@ -4,18 +4,31 @@ import { placeSchema } from "@/validators"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
-  await dbConnect()
+  try {
+    await dbConnect()
 
-  if (req.method === "GET") {
-    const places = await getPlaces()
+    if (req.method === "GET") {
+      let places = null
+      const rawQuery = req.query
 
-    res.send(places)
+      if (rawQuery.type) {
+        const updateSchema = placeSchema.pick(Object.keys(rawQuery)).strict()
+        const query = await updateSchema.validate(rawQuery)
+        places = await getPlaces(query)
 
-    return
-  }
+        res.send(places)
 
-  if (req.method === "POST") {
-    try {
+        return
+      }
+
+      places = await getPlaces()
+
+      res.send(places)
+
+      return
+    }
+
+    if (req.method === "POST") {
       const rawData = req.body
       const data = await placeSchema.validate(rawData)
       const newPlace = await addPlace(data)
@@ -23,19 +36,19 @@ const handle = async (req, res) => {
       res.send(newPlace)
 
       return
-    } catch (error) {
-      if (error instanceof yup.ValidationError) {
-        res.status(400).send({ error: error.errors })
-
-        return
-      }
-
-      console.error(error)
-      res.status(400).send({ error: "Bad request" })
     }
-  }
 
-  res.status(404).send({ error: "Not found" })
+    res.status(404).send({ error: "Not found" })
+  } catch (error) {
+    if (error instanceof yup.ValidationError) {
+      res.status(400).send({ error: error.errors })
+
+      return
+    }
+
+    console.error(error)
+    res.status(400).send({ error: "Bad request" })
+  }
 }
 
 export default handle

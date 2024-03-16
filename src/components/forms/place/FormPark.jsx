@@ -18,7 +18,7 @@ const initialValues = {
   type: PLACE_TYPE.park,
   parkType: PARK_TYPE_OPTION[0].value,
   public: true,
-  freeAccess: true,
+  isFree: true,
   price: 0,
 }
 const FormPark = ({ onSubmit }) => (
@@ -48,17 +48,17 @@ const FormPark = ({ onSubmit }) => (
 
         <div className="flex gap-2 items-center">
           <Toggle
-            enabled={values.freeAccess}
-            onChange={(newValue) => setFieldValue("freeAccess", newValue)}
+            enabled={values.isFree}
+            onChange={(newValue) => setFieldValue("isFree", newValue)}
           />
           <p>Gratuit</p>
         </div>
 
-        {!values.freeAccess && (
+        {!values.isFree && (
           <>
             <FormikInput
               label="Prix"
-              type="text"
+              type="number"
               name="price"
               placeholder="Prix"
             />
