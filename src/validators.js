@@ -148,3 +148,28 @@ export const placeSchema = yup
     }),
   })
   .noUnknown(true)
+
+export const placeSchemaParmasApi = yup
+  .object({
+    name: yup.string(),
+    address: yup.string(),
+    city: yup.string(),
+    zipCode: yup.number(),
+    country: yup.string(),
+    type: yup.string(),
+    kitchenType: yup.string().oneOf(KITCHEN_TYPE),
+    starCount: yup
+      .number()
+      .min(1, "The number of stars cannot be less than 1")
+      .max(5, "The number of stars cannot exceed 5")
+      .integer(),
+    averagePrice: yup.number().min(1).max(5).integer(),
+    artMovement: yup.string().oneOf(ART_MOUEVEMENT),
+    artType: yup.string().oneOf(ART_TYPE),
+    barType: yup.string().oneOf(BAR_TYPE),
+    parkType: yup.string().oneOf(PARK_TYPE),
+    public: yup.boolean(),
+    isFree: yup.boolean(),
+    price: yup.number(),
+  })
+  .noUnknown(true)

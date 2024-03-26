@@ -1,7 +1,7 @@
 import { ErrorMessage, Field } from "formik"
 import Input from "../Input"
 
-const FormikInput = ({ name, label, ...otherProps }) => (
+const FieldInput = ({ name, label, ...otherProps }) => (
   <div className="flex-1">
     <Field name={name}>
       {({ field, form: { isSubmitting } }) => (
@@ -17,4 +17,4 @@ const FormikInput = ({ name, label, ...otherProps }) => (
   </div>
 )
 
-export default FormikInput
+export default FieldInput

@@ -2,27 +2,26 @@ import Button from "@/components/Button"
 import ListBox from "@/components/ListBox"
 import Toggle from "@/components/Toggle"
 import {
-  ART_MOUEVEMENT_OPTION,
-  ART_TYPE_OPTION,
   FORM_INIT_BASE_PLACE,
+  PARK_TYPE_OPTION,
   PLACE_AVERAGE_PRICE_OPTION,
   PLACE_TYPE,
 } from "@/constants"
-import { placeSchema } from "@/validators"
+import { placeSchema } from "@/schemas/placeSchema"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Form, Formik } from "formik"
-import FormikInput from "../FormikInput"
+import FieldInput from "../../FieldInput"
 import FormPlaceBase from "./FormBase"
 
 const initialValues = {
   ...FORM_INIT_BASE_PLACE,
-  type: PLACE_TYPE.museum,
-  artMovement: ART_MOUEVEMENT_OPTION[0].value,
-  artType: ART_TYPE_OPTION[0].value,
+  type: PLACE_TYPE.park,
+  parkType: PARK_TYPE_OPTION[0].value,
+  public: true,
   isFree: true,
   price: 0,
 }
-const FormMuseum = ({ onSubmit }) => (
+const FormPark = ({ onSubmit }) => (
   <Formik
     initialValues={initialValues}
     validationSchema={placeSchema}
@@ -31,19 +30,21 @@ const FormMuseum = ({ onSubmit }) => (
     {({ values, setFieldValue }) => (
       <Form className="flex flex-col gap-2">
         <FormPlaceBase />
-        <ListBox
-          label="Mouvement artistique"
-          options={ART_MOUEVEMENT_OPTION}
-          value={values.artMovement}
-          onChange={(newValue) => setFieldValue("artMovement", newValue.value)}
-        />
 
         <ListBox
-          label="Type d'art"
-          options={ART_TYPE_OPTION}
-          value={values.artType}
-          onChange={(newValue) => setFieldValue("artType", newValue.value)}
+          label="Mouvement artistique"
+          options={PARK_TYPE_OPTION}
+          value={values.parkType}
+          onChange={(newValue) => setFieldValue("parkType", newValue.value)}
         />
+
+        <div className="flex gap-2 items-center">
+          <Toggle
+            enabled={values.public}
+            onChange={(newValue) => setFieldValue("public", newValue)}
+          />
+          <p>Public</p>
+        </div>
 
         <div className="flex gap-2 items-center">
           <Toggle
@@ -52,14 +53,16 @@ const FormMuseum = ({ onSubmit }) => (
           />
           <p>Gratuit</p>
         </div>
+
         {!values.isFree && (
           <>
-            <FormikInput
+            <FieldInput
               label="Prix"
               type="number"
               name="price"
               placeholder="Prix"
             />
+
             <ListBox
               label="Prix moyen"
               options={PLACE_AVERAGE_PRICE_OPTION}
@@ -81,4 +84,4 @@ const FormMuseum = ({ onSubmit }) => (
   </Formik>
 )
 
-export default FormMuseum
+export default FormPark

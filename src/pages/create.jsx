@@ -1,13 +1,19 @@
 import Card from "@/components/Card"
 import ListBox from "@/components/ListBox"
-import FormBar from "@/components/forms/place/FormBar"
-import FormMuseum from "@/components/forms/place/FormMuseum"
-import FormPark from "@/components/forms/place/FormPark"
-import FormRestaurant from "@/components/forms/place/FormRestaurant"
+import FormBar from "@/components/forms/place/create/FormBar"
+import FormMuseum from "@/components/forms/place/create/FormMuseum"
+import FormPark from "@/components/forms/place/create/FormPark"
+import FormRestaurant from "@/components/forms/place/create/FormRestaurant"
 import axios from "axios"
-import { useState } from "react"
+import { createElement, useState } from "react"
 import { PLACE_TYPE_OPTION } from "../constants"
 
+const placesForms = {
+  restaurant: FormRestaurant,
+  museum: FormMuseum,
+  bar: FormBar,
+  park: FormPark,
+}
 const Create = () => {
   const [placeType, setPlaceType] = useState(PLACE_TYPE_OPTION[0].value)
   const handleSubmit = async (data) => {
@@ -25,12 +31,8 @@ const Create = () => {
           onChange={(newValue) => setPlaceType(newValue.value)}
         />
 
-        {placeType === "restaurant" && (
-          <FormRestaurant onSubmit={handleSubmit} />
-        )}
-        {placeType === "museum" && <FormMuseum onSubmit={handleSubmit} />}
-        {placeType === "bar" && <FormBar onSubmit={handleSubmit} />}
-        {placeType === "park" && <FormPark onSubmit={handleSubmit} />}
+        {placesForms[placeType] &&
+          createElement(placesForms[placeType], { onSubmit: handleSubmit })}
       </Card>
     </main>
   )

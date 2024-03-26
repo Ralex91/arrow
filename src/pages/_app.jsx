@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] })
 
 export default function App({ Component, pageProps }) {
   return (
-    <main className={clsx("flex flex-col", inter.className)}>
+    <main className={clsx("flex flex-col dark:text-white", inter.className)}>
       <Header />
       <section>
         <div className="mx-auto max-w-7xl p-4">

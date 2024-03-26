@@ -19,28 +19,44 @@ import { useEffect, useState } from "react"
 const HAS_FREE_ACCESS = [PLACE_TYPE.museum, PLACE_TYPE.park]
 const Home = () => {
   const [places, setPlaces] = useState([])
-  const [placeType, setPlaceType] = useState(PLACE_TYPE_OPTION[0].value)
   const [filter, setFilter] = useState({
-    type: PLACE_TYPE_OPTION[0].value,
-    restaurant: null,
-    museum: null,
-    bar: null,
+    generic: {
+      name: null,
+      city: null,
+    },
+    place: {
+      type: PLACE_TYPE_OPTION[0].value,
+    },
   })
-  const updatePlaceFilter = (key, value) =>
-    setFilter((prev) =>
-      placeType
-        ? { ...prev, [placeType]: { ...prev[placeType], [key]: value } }
-        : { ...prev, ...value },
-    )
-  const fetchPlaces = () =>
-    axios.get("/api/place").then(({ data }) => setPlaces(data))
+  const updatePlaceFilter = (key, value) => {
+    const newFilter = {
+      ...filter,
+      place:
+        key === "type"
+          ? { type: value }
+          : { ...filter.place, [key]: value, type: filter.place.type },
+    }
+
+    setFilter(newFilter)
+  }
+  const fetchPlaces = (placeFilter) =>
+    axios
+      .get("/api/place", {
+        params: placeFilter
+          ? {
+              ...placeFilter.generic,
+              ...placeFilter.place,
+            }
+          : null,
+      })
+      .then(({ data }) => setPlaces(data))
 
   useEffect(() => {
     fetchPlaces()
   }, [])
 
   useEffect(() => {
-    console.log(filter)
+    fetchPlaces(filter)
   }, [filter])
 
   return (
@@ -50,24 +66,41 @@ const Home = () => {
           <h2 className="text-xl font-bold">Affiner votre recherche</h2>
 
           <div className="mt-2 flex flex-col justify-stretch gap-2">
-            <Input label="Nom du lieu" />
-            <Input label="Pays" />
-            <Input label="Ville" />
+            <Input
+              label="Nom du lieu"
+              value={filter.generic.name}
+              onChange={(e) =>
+                setFilter({
+                  ...filter,
+                  generic: { ...filter.generic, name: e.target.value },
+                })
+              }
+            />
+            <Input
+              label="Ville"
+              value={filter.generic.city}
+              onChange={(e) =>
+                setFilter({
+                  ...filter,
+                  generic: { ...filter.generic, city: e.target.value },
+                })
+              }
+            />
             <ListBox
               label="Type de lieu"
               options={PLACE_TYPE_OPTION}
-              onChange={(type) => setPlaceType(type.value)}
-              value={placeType}
+              onChange={(type) => updatePlaceFilter("type", type.value)}
+              value={filter.place.type}
             />
 
-            {placeType === PLACE_TYPE.restaurant && (
+            {filter.place.type === PLACE_TYPE.restaurant && (
               <>
                 <Input
                   label="Nombre d'étoiles"
                   min="1"
                   max="5"
                   type="number"
-                  value={filter.restaurant?.starCount || 0}
+                  value={filter.place?.starCount || 0}
                   onChange={({ target: { value } }) =>
                     updatePlaceFilter("starCount", parseInt(value, 10))
                   }
@@ -78,17 +111,17 @@ const Home = () => {
                   onChange={(kitchenType) =>
                     updatePlaceFilter("kitchenType", kitchenType.value)
                   }
-                  value={filter.restaurant?.kitchenType}
+                  value={filter.place?.kitchenType}
                 />
               </>
             )}
 
-            {placeType === PLACE_TYPE.museum && (
+            {filter.place.type === PLACE_TYPE.museum && (
               <>
                 <ListBox
                   label="Mouvement artistique"
                   options={ART_MOUEVEMENT_OPTION}
-                  value={filter.museum?.artMovement}
+                  value={filter.place?.artMovement}
                   onChange={(artMovement) =>
                     updatePlaceFilter("artMovement", artMovement.value)
                   }
@@ -96,7 +129,7 @@ const Home = () => {
                 <ListBox
                   label="Mouvement artistique"
                   options={ART_TYPE_OPTION}
-                  value={filter.museum?.artType}
+                  value={filter.place?.artType}
                   onChange={(artType) =>
                     updatePlaceFilter("artType", artType.value)
                   }
@@ -104,12 +137,12 @@ const Home = () => {
               </>
             )}
 
-            {placeType === PLACE_TYPE.bar && (
+            {filter.place.type === PLACE_TYPE.bar && (
               <>
                 <ListBox
                   label="Type de bar"
                   options={BAR_TYPE_OPTION}
-                  value={filter.bar?.barType}
+                  value={filter.place?.barType}
                   onChange={(barType) =>
                     updatePlaceFilter("barType", barType.value)
                   }
@@ -117,12 +150,12 @@ const Home = () => {
               </>
             )}
 
-            {placeType === PLACE_TYPE.park && (
+            {filter.place.type === PLACE_TYPE.park && (
               <>
                 <ListBox
                   label="Type de parc"
                   options={PARK_TYPE_OPTION}
-                  value={filter.park?.parkType}
+                  value={filter.place?.parkType}
                   onChange={(parkType) =>
                     updatePlaceFilter("parkType", parkType.value)
                   }
@@ -130,7 +163,7 @@ const Home = () => {
 
                 <div className="flex items-center gap-4">
                   <Toggle
-                    enabled={filter[placeType]?.public}
+                    enabled={filter.place?.public}
                     onChange={(enable) => updatePlaceFilter("public", enable)}
                   />
                   <p>Public</p>
@@ -138,21 +171,21 @@ const Home = () => {
               </>
             )}
 
-            {HAS_FREE_ACCESS.includes(placeType) && (
+            {HAS_FREE_ACCESS.includes(filter.place.type) && (
               <div className="flex items-center gap-4">
                 <Toggle
-                  enabled={filter[placeType]?.isFree}
+                  enabled={filter.place?.isFree}
                   onChange={(enable) => updatePlaceFilter("isFree", enable)}
                 />
                 <p>Gratuit</p>
               </div>
             )}
 
-            {!filter[placeType]?.isFree && (
+            {!filter[filter.place.type]?.isFree && (
               <ListBox
                 label="Prix moyen"
                 options={PLACE_AVERAGE_PRICE_OPTION}
-                value={filter[placeType]?.averagePrice}
+                value={filter.place?.averagePrice}
                 onChange={(averagePrice) =>
                   updatePlaceFilter("averagePrice", averagePrice.value)
                 }

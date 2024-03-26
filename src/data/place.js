@@ -1,4 +1,4 @@
-import { PlaceModel } from "./models/PlaceModel"
+import { PlaceModel } from "../models/PlaceModel"
 
 export const addPlace = async (data) => {
   const newPlace = new PlaceModel(data)
@@ -7,7 +7,19 @@ export const addPlace = async (data) => {
   return newPlace
 }
 
-export const getPlaces = async (query) => await PlaceModel.find(query)
+export const getPlaces = async (query) => {
+  if (query?.name) {
+    query.name = new RegExp(query.name, "u")
+  }
+
+  if (query?.city) {
+    query.city = new RegExp(query.city, "u")
+  }
+
+  const places = await PlaceModel.find(query)
+
+  return places
+}
 
 export const getPlace = async (placeId) => await PlaceModel.findById(placeId)
 

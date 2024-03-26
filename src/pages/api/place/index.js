@@ -1,6 +1,6 @@
-import { addPlace, getPlaces } from "@/db/crud"
+import { addPlace, getPlaces } from "@/data/place"
 import dbConnect from "@/libs/dbConnect"
-import { placeSchema } from "@/validators"
+import { placeSchema, placeSchemaParmasApi } from "@/validators"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
@@ -8,20 +8,9 @@ const handle = async (req, res) => {
     await dbConnect()
 
     if (req.method === "GET") {
-      let places = null
       const rawQuery = req.query
-
-      if (rawQuery.type) {
-        const updateSchema = placeSchema.pick(Object.keys(rawQuery)).strict()
-        const query = await updateSchema.validate(rawQuery)
-        places = await getPlaces(query)
-
-        res.send(places)
-
-        return
-      }
-
-      places = await getPlaces()
+      const query = await placeSchemaParmasApi.validate(rawQuery)
+      const places = await getPlaces(query)
 
       res.send(places)
 

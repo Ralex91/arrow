@@ -7,7 +7,7 @@ const Place = ({ data: { _id, name, address, price, starCount } }) => (
   <Link href={`/palce/${_id}`}>
     <Card className="overflow-hidden hover:-translate-x-1 hover:-translate-y-1 transition-all hover:shadow-[0.25rem_0.25rem] hover:shadow-red-600">
       <Image
-        alt={`Preview`}
+        alt={`Preview ${name}`}
         width="100"
         height="100"
         src="https://placehold.co/600x400"

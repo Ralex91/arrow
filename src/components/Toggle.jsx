@@ -5,7 +5,7 @@ const Toggle = ({ name, enabled, onChange }) => (
     name={name}
     checked={enabled}
     onChange={onChange}
-    className={`${enabled ? "bg-red-600" : "bg-gray-300"}
+    className={`${enabled ? "bg-red-600" : "bg-gray-300 dark:bg-slate-900"}
         relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white/75`}
   >
     <span

@@ -9,7 +9,7 @@ import {
 import { placeSchema } from "@/validators"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { Form, Formik } from "formik"
-import FormikInput from "../FormikInput"
+import FieldInput from "../../FieldInput"
 import FormPlaceBase from "./FormBase"
 
 const initialValues = {
@@ -34,7 +34,7 @@ const FormRestaurant = ({ onSubmit }) => (
           value={values.kitchenType}
           onChange={(newValue) => setFieldValue("kitchenType", newValue.value)}
         />
-        <FormikInput
+        <FieldInput
           label="Nombre d'étoiles"
           type="number"
           name="starCount"

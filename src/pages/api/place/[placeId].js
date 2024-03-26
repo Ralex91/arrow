@@ -1,4 +1,4 @@
-import { deletePlace, getPlace, updatePlace } from "@/db/crud"
+import { deletePlace, getPlace, updatePlace } from "@/data/place"
 import dbConnect from "@/libs/dbConnect"
 import { placeSchema } from "@/validators"
 import * as yup from "yup"
