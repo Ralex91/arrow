@@ -2,7 +2,7 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import Link from "next/link"
 
 const Header = () => (
-  <header className="border-b border-gray-200 sticky h-16 top-0 bg-white z-[99] px-4">
+  <header className="border-b border-gray-200 dark:border-slate-700 sticky h-16 top-0 bg-white z-[99] px-4 dark:bg-slate-800">
     <div className="mx-auto max-w-7xl flex h-full justify-between items-center">
       <Link href="/" className=" font-extrabold">
         LOGO
