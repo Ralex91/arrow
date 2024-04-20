@@ -1,26 +1,22 @@
-import { addPlace, getPlaces } from "@/data/place"
-import { placeSchema } from "@/features/place/schemas/Place"
+import { getPlaces } from "@/data/place"
+import { placeSchemaSearch } from "@/features/place/schemas/Place"
 import dbConnect from "@/libs/dbConnect"
+import { queryNestedObjects } from "@/utils/format"
+import cleanDeep from "clean-deep"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
   try {
     await dbConnect()
 
-    if (req.method === "GET") {
-      const places = await getPlaces()
-
-      res.send(places)
-
-      return
-    }
-
     if (req.method === "POST") {
       const rawData = req.body
-      const data = await placeSchema.validate(rawData)
-      const newPlace = await addPlace(data)
+      const cleanObject = cleanDeep(rawData)
+      const query = await placeSchemaSearch.validate(cleanObject)
+      const formatQuery = queryNestedObjects(query)
+      const places = await getPlaces(formatQuery)
 
-      res.send(newPlace)
+      res.send(places)
 
       return
     }
