@@ -1,9 +1,4 @@
-export const PLACE_TYPE = {
-  restaurant: "restaurant",
-  museum: "museum",
-  bar: "bar",
-  park: "park",
-}
+export const PLACE_TYPES = ["restaurant", "museum", "bar", "park"]
 
 export const KITCHEN_TYPE = [
   "italian",
@@ -31,7 +26,7 @@ export const FORM_INIT_BASE_PLACE = {
   name: "",
   address: "",
   city: "",
-  zipCode: "",
+  zipCode: 0,
   country: "",
 }
 

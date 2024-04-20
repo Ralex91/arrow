@@ -1,20 +1,28 @@
-import { ErrorMessage, Field } from "formik"
+import { ErrorMessage, useFormikContext } from "formik"
 import Input from "../Input"
 
-const FieldInput = ({ name, label, ...otherProps }) => (
-  <div className="flex-1">
-    <Field name={name}>
-      {({ field, form: { isSubmitting } }) => (
-        <Input
-          {...field}
-          disabled={isSubmitting}
-          label={label}
-          {...otherProps}
-        />
+const FieldInput = ({ name, label, ...otherProps }) => {
+  const { values, handleChange } = useFormikContext()
+
+  return (
+    <div>
+      {label && (
+        <p className="text-sm text-gray-600 ml-1 mb-2 dark:text-white">
+          {label}
+        </p>
       )}
-    </Field>
-    <ErrorMessage component="p" className="text-red-600" name={name} />
-  </div>
-)
+
+      <Input
+        label={label}
+        name={name}
+        value={values[name]}
+        onChange={handleChange}
+        {...otherProps}
+      />
+
+      <ErrorMessage component="p" className="text-red-600" name={name} />
+    </div>
+  )
+}
 
 export default FieldInput

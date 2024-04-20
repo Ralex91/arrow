@@ -1,6 +1,6 @@
-import FieldInput from "../../FieldInput"
+import FieldInput from "../../../../components/forms/FieldInput"
 
-const FormPlaceBase = () => (
+const FormPlace = () => (
   <>
     <FieldInput type="text" name="name" label="Nom" />
     <FieldInput type="text" name="address" label="Adresse" />
@@ -12,4 +12,4 @@ const FormPlaceBase = () => (
   </>
 )
 
-export default FormPlaceBase
+export default FormPlace

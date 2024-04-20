@@ -1,6 +1,6 @@
 import { deletePlace, getPlace, updatePlace } from "@/data/place"
+import { placeSchema } from "@/features/place/schemas/Place"
 import dbConnect from "@/libs/dbConnect"
-import { placeSchema } from "@/validators"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
@@ -25,22 +25,16 @@ const handle = async (req, res) => {
   if (req.method === "PATCH") {
     try {
       const rawData = req.body
+      const updateData = await placeSchema.validate(rawData)
+      const place = await getPlace(placeId)
 
-      if (!rawData.type) {
-        res.status(400).send({ error: "Place type is required" })
-
-        return
-      }
-
-      const updateSchema = placeSchema.pick(Object.keys(rawData)).strict()
-      const data = await updateSchema.validate(rawData)
-      const updatedPlace = await updatePlace(placeId, data)
-
-      if (!updatedPlace) {
+      if (!place) {
         res.status(404).send({ error: "Not found" })
 
         return
       }
+
+      const updatedPlace = await updatePlace(placeId, updateData)
 
       res.send(updatedPlace)
 
@@ -53,7 +47,7 @@ const handle = async (req, res) => {
       }
 
       console.error(error)
-      res.status(400).send({ error: "Bad request" })
+      res.status(500).send({ error: "Server Error" })
     }
   }
 

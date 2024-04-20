@@ -3,7 +3,7 @@ import { SewingPinFilledIcon, StarFilledIcon } from "@radix-ui/react-icons"
 import Image from "next/image"
 import Link from "next/link"
 
-const Place = ({ data: { _id, name, address, price, starCount } }) => (
+const PlaceCard = ({ data: { _id, name, address, price, starCount } }) => (
   <Link href={`/palce/${_id}`}>
     <Card className="overflow-hidden hover:-translate-x-1 hover:-translate-y-1 transition-all hover:shadow-[0.25rem_0.25rem] hover:shadow-red-600">
       <Image
@@ -32,4 +32,4 @@ const Place = ({ data: { _id, name, address, price, starCount } }) => (
   </Link>
 )
 
-export default Place
+export default PlaceCard
