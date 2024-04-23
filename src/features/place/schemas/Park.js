@@ -1,4 +1,4 @@
-import { PARK_TYPE } from "@/utils/constants"
+import { PARK_TYPE } from "@/features/place/utils/constants"
 import { Schema } from "mongoose"
 import * as yup from "yup"
 

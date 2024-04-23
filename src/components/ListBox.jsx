@@ -14,7 +14,7 @@ const ListBox = ({
 }) => {
   let selectedItem = null
   const options = empty
-    ? [{ label: "Aucun", value: null }, ...rawOptions]
+    ? [{ label: "None", value: null }, ...rawOptions]
     : rawOptions
 
   if (value) {
@@ -27,7 +27,7 @@ const ListBox = ({
     <Listbox value={selectedItem} onChange={onChange} {...otherProps}>
       <div className="relative">
         <Listbox.Button className="p-2 rounded-md outline-none active:border-red-600 border dark:bg-slate-900 dark:text-white dark:border-slate-700 border-gray-200 w-full text-left flex justify-between items-center">
-          {selectedItem?.label ?? "Selectioner une option"}
+          {selectedItem?.label ?? "Select an option"}
           <ChevronDownIcon />
         </Listbox.Button>
         <Listbox.Options className="absolute bg-white dark:bg-slate-900 dark:text-white z-20 w-full rounded-md border border-gray-200 dark:border-slate-700 max-h-52 overflow-y-auto">

@@ -1,11 +1,11 @@
+import Input from "@/components/Input"
 import { ErrorMessage, useFormikContext } from "formik"
-import Input from "../Input"
 
-const FieldInput = ({ name, label, ...otherProps }) => {
+const FieldInput = ({ name, label, className, ...otherProps }) => {
   const { values, handleChange } = useFormikContext()
 
   return (
-    <div>
+    <div className={className}>
       {label && (
         <p className="text-sm text-gray-600 ml-1 mb-2 dark:text-white">
           {label}

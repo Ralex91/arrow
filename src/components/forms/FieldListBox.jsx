@@ -1,5 +1,5 @@
+import ListBox from "@/components/ListBox"
 import { ErrorMessage, useFormikContext } from "formik"
-import ListBox from "../ListBox"
 
 const FieldListBox = ({ name, subName, label, options, empty, onChange }) => {
   const { setFieldValue, values } = useFormikContext()

@@ -1,7 +1,7 @@
-import { PLACE_TYPE, PLACE_TYPES } from "@/utils/constants"
+import { PLACE_TYPE, PLACE_TYPES } from "@/features/place/utils/constants"
+import { PLACES_SCHEMAS } from "@/features/place/utils/schemas"
 import { Schema } from "mongoose"
 import * as yup from "yup"
-import { PLACES_SCHEMAS } from "../utils/constants"
 import { BarSchema } from "./Bar"
 import { MuseumSchema } from "./Museum"
 import { ParkSchema } from "./Park"
@@ -37,22 +37,20 @@ export const PlaceSchema = new Schema({
   },
 })
 
-export const placeSchemaBase = yup.object({
-  type: yup.string().oneOf(PLACE_TYPES).required(),
-  name: yup.string().required("The name is required"),
-  address: yup.string().required("The address is required"),
-  city: yup.string().required("The city is required"),
-  zipCode: yup.number().required("The zip code is required"),
-  country: yup.string().required("The country is required"),
-})
-
 export const placeSchema = yup.lazy((values) =>
   yup.object({
     type: yup.string().oneOf(PLACE_TYPES).required(),
     name: yup.string().required("The name is required"),
     address: yup.string().required("The address is required"),
     city: yup.string().required("The city is required"),
-    zipCode: yup.number().required("The zip code is required"),
+    zipCode: yup
+      .number()
+      .test(
+        "maxDigits",
+        "Zip code field must have exactly 5 digits",
+        (number) => String(number).length > 5,
+      )
+      .required("The zip code is required"),
     country: yup.string().required("The country is required"),
     [values.type]: PLACES_SCHEMAS[values.type],
   }),

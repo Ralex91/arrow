@@ -1,4 +1,4 @@
-import { ART_MOUEVEMENT, ART_TYPE } from "@/utils/constants"
+import { ART_MOVEMENT, ART_TYPE } from "@/features/place/utils/constants"
 import { Schema } from "mongoose"
 import * as yup from "yup"
 
@@ -9,7 +9,7 @@ export const MuseumSchema = new Schema({
   },
   artMovement: {
     type: String,
-    enum: ART_MOUEVEMENT,
+    enum: ART_MOVEMENT,
   },
   averagePrice: {
     type: Number,
@@ -26,7 +26,7 @@ export const museumSchema = yup
     artType: yup.string().oneOf(ART_TYPE).required("Art type is required"),
     artMovement: yup
       .string()
-      .oneOf(ART_MOUEVEMENT)
+      .oneOf(ART_MOVEMENT)
       .required("Art movement is required"),
     price: yup
       .number()

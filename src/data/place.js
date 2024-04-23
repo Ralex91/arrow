@@ -1,4 +1,4 @@
-import { PlaceModel } from "../features/place/models/Place"
+import { PlaceModel } from "@/features/place/models/Place"
 
 export const addPlace = async (data) => {
   const newPlace = new PlaceModel(data)

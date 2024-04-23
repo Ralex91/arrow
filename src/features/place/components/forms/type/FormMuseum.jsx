@@ -2,10 +2,10 @@ import Toggle from "@/components/Toggle"
 import FieldInput from "@/components/forms/FieldInput"
 import FieldListBox from "@/components/forms/FieldListBox"
 import {
-  ART_MOUEVEMENT_OPTION,
+  ART_MOVEMENT_OPTION,
   ART_TYPE_OPTION,
   PLACE_AVERAGE_PRICE_OPTION,
-} from "@/utils/constants"
+} from "@/features/place/utils/constants"
 import { useFormikContext } from "formik"
 import { useEffect, useState } from "react"
 
@@ -26,14 +26,14 @@ const FormMuseum = ({ enablePrice = true }) => {
       <FieldListBox
         name="artMovement"
         subName="museum"
-        label="Mouvement artistique"
-        options={ART_MOUEVEMENT_OPTION}
+        label="Art mouvement"
+        options={ART_MOVEMENT_OPTION}
       />
 
       <FieldListBox
         name="artType"
         subName="museum"
-        label="Type d'art"
+        label="Art type"
         options={ART_TYPE_OPTION}
       />
 
@@ -45,17 +45,16 @@ const FormMuseum = ({ enablePrice = true }) => {
         <>
           {enablePrice && (
             <FieldInput
-              label="Prix"
+              label="Price"
               type="number"
               name="museum.price"
-              placeholder="Prix"
               min={1}
             />
           )}
           <FieldListBox
             name="averagePrice"
             subName="museum"
-            label="Prix moyen"
+            label="Average price"
             options={PLACE_AVERAGE_PRICE_OPTION}
           />
         </>
