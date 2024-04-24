@@ -1,27 +1,5 @@
 import { PARK_TYPE } from "@/features/place/utils/constants"
-import { Schema } from "mongoose"
 import * as yup from "yup"
-
-export const ParkSchema = new Schema({
-  parkType: {
-    type: String,
-    enum: PARK_TYPE,
-  },
-  public: {
-    type: Boolean,
-  },
-  averagePrice: {
-    type: Number,
-    min: 1,
-    max: 5,
-  },
-  isFree: {
-    type: Boolean,
-  },
-  price: {
-    type: Number,
-  },
-})
 
 export const parkSchema = yup
   .object({

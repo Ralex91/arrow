@@ -1,7 +1,7 @@
 import ListBox from "@/components/ListBox"
 import { ErrorMessage, useFormikContext } from "formik"
 
-const FieldListBox = ({ name, subName, label, options, empty, onChange }) => {
+const FieldListBox = ({ name, subName, label, options, empty }) => {
   const { setFieldValue, values } = useFormikContext()
   const nameString = subName ? [subName, name].join(".") : name
   const nameValue = values[subName] ? values[subName][name] : values[name]
@@ -18,14 +18,7 @@ const FieldListBox = ({ name, subName, label, options, empty, onChange }) => {
         options={options}
         value={nameValue}
         empty={empty}
-        onChange={(option) => {
-          const oldValue = nameValue
-          setFieldValue(nameString, option.value)
-
-          if (onChange) {
-            onChange(option.value, oldValue)
-          }
-        }}
+        onChange={(option) => setFieldValue(nameString, option.value)}
       />
 
       <ErrorMessage component="p" className="text-red-600" name={nameString} />

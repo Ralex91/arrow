@@ -76,9 +76,9 @@ const Create = ({ place }) => {
         </div>
         <Image
           alt={`Preview ${place.name}`}
-          width="100"
-          height="100"
-          src="https://placehold.co/600x400"
+          width="500"
+          height="500"
+          src={`https://source.unsplash.com/featured/1600x900?${place.type}`}
           className="w-full object-cover rounded flex-1"
         />
       </div>

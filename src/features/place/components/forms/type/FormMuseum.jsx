@@ -11,28 +11,28 @@ import { useEffect, useState } from "react"
 
 const FormMuseum = ({ enablePrice = true }) => {
   const { values, setFieldValue } = useFormikContext()
-  const [isFree, setIsFree] = useState(false)
+  const [isFree, setIsFree] = useState(Boolean(values.details?.price))
 
   useEffect(() => {
-    setFieldValue("museum.price", isFree ? 0 : values.museum?.price || null)
+    setFieldValue("details.price", isFree ? 0 : values.details?.price || null)
     setFieldValue(
-      "museum.averagePrice",
-      isFree ? null : values.museum?.averagePrice,
+      "details.averagePrice",
+      isFree ? null : values.details?.averagePrice,
     )
-  }, [values.museum, isFree, setFieldValue])
+  }, [values.details, isFree, setFieldValue])
 
   return (
     <>
       <FieldListBox
         name="artMovement"
-        subName="museum"
+        subName="details"
         label="Art mouvement"
         options={ART_MOVEMENT_OPTION}
       />
 
       <FieldListBox
         name="artType"
-        subName="museum"
+        subName="details"
         label="Art type"
         options={ART_TYPE_OPTION}
       />
@@ -47,13 +47,14 @@ const FormMuseum = ({ enablePrice = true }) => {
             <FieldInput
               label="Price"
               type="number"
-              name="museum.price"
+              name="price"
+              subName="details"
               min={1}
             />
           )}
           <FieldListBox
             name="averagePrice"
-            subName="museum"
+            subName="details"
             label="Average price"
             options={PLACE_AVERAGE_PRICE_OPTION}
           />

@@ -5,7 +5,7 @@ import {
 import { InfoCircledIcon } from "@radix-ui/react-icons"
 
 const DetailsPark = ({ place }) => {
-  const { parkType, price, averagePrice, public: isPublic } = place.park
+  const { parkType, price, averagePrice, public: isPublic } = place.details
 
   return (
     <div className="flex flex-col gap-2">

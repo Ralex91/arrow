@@ -9,20 +9,21 @@ const FormRestaurant = () => (
   <>
     <FieldListBox
       name="kitchenType"
-      subName="restaurant"
+      subName="details"
       label="Kitchen Type"
       options={KITCHEN_TYPE_OPTION}
     />
     <FieldInput
       label="Stars Rate"
       type="number"
-      name="restaurant.starCount"
+      name="starCount"
+      subName="details"
       min={1}
       max={5}
     />
     <FieldListBox
       name="averagePrice"
-      subName="restaurant"
+      subName="details"
       label="Average price"
       options={PLACE_AVERAGE_PRICE_OPTION}
     />

@@ -18,11 +18,12 @@ const FormCreate = ({ onSubmit }) => (
     initialValues={{
       ...FORM_INIT_BASE_PLACE,
       type: PLACE_TYPE_OPTION[0].value,
+      details: {},
     }}
     validationSchema={placeSchema}
     onSubmit={onSubmit}
   >
-    {({ values, setFieldValue }) => (
+    {({ values }) => (
       <Form className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col flex-1 gap-4">
           <FormPlace />
@@ -33,7 +34,6 @@ const FormCreate = ({ onSubmit }) => (
             name="type"
             empty={false}
             options={PLACE_TYPE_OPTION}
-            onChange={(_, oldOption) => setFieldValue(oldOption, undefined)}
           />
 
           {PLACES_FORMS[values.type] &&
