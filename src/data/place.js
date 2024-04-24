@@ -25,11 +25,10 @@ export const getPlace = async (placeId) => await PlaceModel.findById(placeId)
 
 export const updatePlace = async (placeId, data) => {
   const place = await PlaceModel.findById(placeId).lean()
-
-  Object.assign(place, data)
-
-  const updatedPlace = new PlaceModel(place)
-  await updatedPlace.save()
+  const input = Object.assign(place, data)
+  const updatedPlace = await PlaceModel.findByIdAndUpdate(placeId, input, {
+    returnDocument: "after",
+  })
 
   return updatedPlace
 }
