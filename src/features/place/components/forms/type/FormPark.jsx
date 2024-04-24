@@ -10,7 +10,7 @@ import { useEffect, useState } from "react"
 
 const FormPark = ({ enablePrice = true }) => {
   const { values, setFieldValue } = useFormikContext()
-  const [isFree, setIsFree] = useState(false)
+  const [isFree, setIsFree] = useState(values.details?.price === 0)
 
   useEffect(() => {
     setFieldValue("details.price", isFree ? 0 : values.details?.price || null)
@@ -28,6 +28,7 @@ const FormPark = ({ enablePrice = true }) => {
         subName="details"
         label="Park type"
         options={PARK_TYPE_OPTION}
+        empty={true}
       />
 
       <div className="flex gap-2 items-center">
@@ -46,7 +47,12 @@ const FormPark = ({ enablePrice = true }) => {
       {!isFree && (
         <>
           {enablePrice && (
-            <FieldInput label="Price" type="number" name="details.price" />
+            <FieldInput
+              label="Price"
+              type="number"
+              name="price"
+              subName="details"
+            />
           )}
 
           <FieldListBox
@@ -54,6 +60,7 @@ const FormPark = ({ enablePrice = true }) => {
             subName="details"
             label="Average price"
             options={PLACE_AVERAGE_PRICE_OPTION}
+            empty={true}
           />
         </>
       )}

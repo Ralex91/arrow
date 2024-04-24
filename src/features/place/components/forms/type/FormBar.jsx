@@ -11,6 +11,7 @@ const FormBar = () => (
       subName="details"
       label="Bar type"
       options={BAR_TYPE_OPTION}
+      empty={true}
     />
 
     <FieldListBox
@@ -18,6 +19,7 @@ const FormBar = () => (
       subName="details"
       label="Average price"
       options={PLACE_AVERAGE_PRICE_OPTION}
+      empty={true}
     />
   </>
 )

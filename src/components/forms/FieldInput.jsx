@@ -22,7 +22,7 @@ const FieldInput = ({ name, subName, label, className, ...otherProps }) => {
         {...otherProps}
       />
 
-      <ErrorMessage component="p" className="text-red-600" name={name} />
+      <ErrorMessage component="p" className="text-red-600" name={nameString} />
     </div>
   )
 }

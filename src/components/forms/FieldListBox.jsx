@@ -1,10 +1,17 @@
 import ListBox from "@/components/ListBox"
 import { ErrorMessage, useFormikContext } from "formik"
+import { useEffect } from "react"
 
-const FieldListBox = ({ name, subName, label, options, empty }) => {
+const FieldListBox = ({ name, subName, label, options, empty, onChange }) => {
   const { setFieldValue, values } = useFormikContext()
   const nameString = subName ? [subName, name].join(".") : name
   const nameValue = values[subName] ? values[subName][name] : values[name]
+
+  useEffect(() => {
+    if (empty && !nameValue) {
+      setFieldValue(nameString, null)
+    }
+  }, [empty, nameString, nameValue, setFieldValue])
 
   return (
     <div>
@@ -18,7 +25,13 @@ const FieldListBox = ({ name, subName, label, options, empty }) => {
         options={options}
         value={nameValue}
         empty={empty}
-        onChange={(option) => setFieldValue(nameString, option.value)}
+        onChange={(option) => {
+          setFieldValue(nameString, option.value)
+
+          if (onChange) {
+            onChange(option.value)
+          }
+        }}
       />
 
       <ErrorMessage component="p" className="text-red-600" name={nameString} />

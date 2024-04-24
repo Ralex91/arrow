@@ -18,7 +18,7 @@ const FormEdit = ({ onSubmit, defaultValues }) => (
     validationSchema={placeSchema}
     onSubmit={onSubmit}
   >
-    {({ values }) => (
+    {({ values, setFieldValue }) => (
       <Form className="flex flex-col md:flex-row gap-4">
         <div className="flex flex-col flex-1 gap-4">
           <FormPlace />
@@ -29,6 +29,7 @@ const FormEdit = ({ onSubmit, defaultValues }) => (
             name="type"
             empty={false}
             options={PLACE_TYPE_OPTION}
+            onChange={() => setFieldValue("details", {})}
           />
 
           {PLACES_FORMS[values.type] &&

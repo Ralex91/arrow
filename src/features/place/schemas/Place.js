@@ -1,5 +1,8 @@
 import { PLACE_TYPE, PLACE_TYPES } from "@/features/place/utils/constants"
-import { PLACES_SCHEMAS } from "@/features/place/utils/schemas"
+import {
+  PLACES_SCHEMAS,
+  PLACES_SEARCH_SCHEMAS,
+} from "@/features/place/utils/schemas"
 import { Schema } from "mongoose"
 import * as yup from "yup"
 
@@ -48,8 +51,8 @@ export const placeSchemaSearch = yup.lazy((values) =>
       type: yup.string().oneOf(PLACE_TYPES).nullable(),
       name: yup.string().transform((_, value) => value || null),
       city: yup.string().nullable(),
-      ...(PLACES_SCHEMAS[values.type] && {
-        details: PLACES_SCHEMAS[values.type].partial().noUnknown(true),
+      ...(PLACES_SEARCH_SCHEMAS[values.type] && {
+        details: PLACES_SEARCH_SCHEMAS[values.type].partial().noUnknown(true),
       }),
     })
     .noUnknown(true),

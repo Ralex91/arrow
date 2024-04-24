@@ -11,7 +11,7 @@ import { useEffect, useState } from "react"
 
 const FormMuseum = ({ enablePrice = true }) => {
   const { values, setFieldValue } = useFormikContext()
-  const [isFree, setIsFree] = useState(Boolean(values.details?.price))
+  const [isFree, setIsFree] = useState(values.details?.price === 0)
 
   useEffect(() => {
     setFieldValue("details.price", isFree ? 0 : values.details?.price || null)
@@ -28,6 +28,7 @@ const FormMuseum = ({ enablePrice = true }) => {
         subName="details"
         label="Art mouvement"
         options={ART_MOVEMENT_OPTION}
+        empty={true}
       />
 
       <FieldListBox
@@ -35,6 +36,7 @@ const FormMuseum = ({ enablePrice = true }) => {
         subName="details"
         label="Art type"
         options={ART_TYPE_OPTION}
+        empty={true}
       />
 
       <div className="flex gap-2 items-center">
@@ -49,7 +51,6 @@ const FormMuseum = ({ enablePrice = true }) => {
               type="number"
               name="price"
               subName="details"
-              min={1}
             />
           )}
           <FieldListBox
@@ -57,6 +58,7 @@ const FormMuseum = ({ enablePrice = true }) => {
             subName="details"
             label="Average price"
             options={PLACE_AVERAGE_PRICE_OPTION}
+            empty={true}
           />
         </>
       )}

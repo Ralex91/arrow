@@ -1,8 +1,8 @@
-import FieldInput from "@/components/forms/FieldInput"
 import FieldListBox from "@/components/forms/FieldListBox"
 import {
   KITCHEN_TYPE_OPTION,
   PLACE_AVERAGE_PRICE_OPTION,
+  PLACE_STAR_RATE,
 } from "@/features/place/utils/constants"
 
 const FormRestaurant = () => (
@@ -12,20 +12,21 @@ const FormRestaurant = () => (
       subName="details"
       label="Kitchen Type"
       options={KITCHEN_TYPE_OPTION}
+      empty={true}
     />
-    <FieldInput
-      label="Stars Rate"
-      type="number"
+    <FieldListBox
       name="starCount"
       subName="details"
-      min={1}
-      max={5}
+      label="Stars Rate"
+      options={PLACE_STAR_RATE}
+      empty={true}
     />
     <FieldListBox
       name="averagePrice"
       subName="details"
       label="Average price"
       options={PLACE_AVERAGE_PRICE_OPTION}
+      empty={true}
     />
   </>
 )

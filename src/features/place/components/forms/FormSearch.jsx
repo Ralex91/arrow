@@ -31,7 +31,9 @@ const FormSearch = ({ onSubmit }) => (
           />
 
           {PLACES_FORMS[values.type] &&
-            createElement(PLACES_FORMS[values.type], { enablePrice: false })}
+            createElement(PLACES_FORMS[values.type], {
+              enablePrice: false,
+            })}
 
           <div className="flex justify-end mt-4">
             <Button className="w-auto" type="submit">
