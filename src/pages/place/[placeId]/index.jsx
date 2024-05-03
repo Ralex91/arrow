@@ -1,4 +1,5 @@
 import Button from "@/components/Button"
+import ErrorMessage from "@/components/ErrorMessage"
 import DeleteConfirm from "@/components/modals/DeleteConfirm"
 import DetailsBar from "@/features/place/components/details/DetailsBar"
 import DetailsMuseum from "@/features/place/components/details/DetailsMuseum"
@@ -19,13 +20,21 @@ const DetailsPlaces = {
 }
 
 export const getServerSideProps = async ({ query: { placeId } }) => {
-  const { data: place } = await axios(
-    `http://localhost:3000/api/place/${placeId}`,
-  )
+  try {
+    const { data: place } = await axios(
+      `http://localhost:3000/api/place/${placeId}`,
+    )
 
-  return { props: { place } }
+    return { props: { place } }
+  } catch ({
+    response: {
+      data: { error },
+    },
+  }) {
+    return { props: { error } }
+  }
 }
-const Create = ({ place }) => {
+const Create = ({ place, error }) => {
   const [isOpen, setIsOpen] = useState(false)
   const router = useRouter()
   const handleDelete = (placeId) => async () => {
@@ -33,8 +42,8 @@ const Create = ({ place }) => {
     router.push("/")
   }
 
-  if (!place) {
-    return <div>Place not found</div>
+  if (error) {
+    return <ErrorMessage text="An error occurred" details={error} />
   }
 
   const { _id: placeId } = place

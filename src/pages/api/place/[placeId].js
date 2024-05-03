@@ -1,12 +1,20 @@
 import { deletePlace, getPlace, updatePlace } from "@/data/place"
 import { placeSchema } from "@/features/place/schemas/Place"
 import dbConnect from "@/libs/dbConnect"
+import { isValidObjectId } from "mongoose"
 import * as yup from "yup"
 
 const handle = async (req, res) => {
   await dbConnect()
 
   const { placeId } = req.query
+  const isValidId = isValidObjectId(placeId)
+
+  if (!isValidId) {
+    res.status(400).send({ error: "Invalid place id" })
+
+    return
+  }
 
   if (req.method === "GET") {
     const place = await getPlace(placeId)
