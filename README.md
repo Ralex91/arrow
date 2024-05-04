@@ -1,40 +1,135 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img width="450" height="120" align="center" src="https://raw.githubusercontent.com/Ralex91/arrow/main/.github/arrow.svg">
+  <br>
+  <img align="center" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/Ralex91/arrow/edit/main/README.md&countColor=%2337d67a">
+</p>
 
-## Getting Started
+## 🧩 What is this project?
 
-First, run the development server:
+This project is a web application built using the Next.js framework and the Mongoose library for managing a MongoDB database. It is a simple CRUD application for managing places, including their type, name, address, city, zip code, country, and details.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+> ⚠️ This project is an assignment that I had to complete during my training in my school.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ⚙️ Prerequisites
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+- Before launching the application, you must have a **MongoDB** database configured.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+- Create a `.env` file at the root of the project with the following configuration:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  ```
+  DB_URL="mongodb://127.0.0.1:27017/arrow"
+  ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  Make sure your MongoDB database is accessible at the indicated address.
 
-## Learn More
+## 📦 Running the Application in Development Mode
 
-To learn more about Next.js, take a look at the following resources:
+### To run the application in development mode, follow these steps:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  #### Clone the GitHub repository of your project.
+    ```bash
+    git clone https://github.com/Ralex91/arrow.git
+    cd ./arrow
+    ```
+2.  #### Install the dependencies using your preferred package manager
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  #### Start the development server:
+    ```bash
+    npm run dev
+    ```
+    Your application will be accessible at `http://localhost:3000`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 API Endpoints
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### The application has the following API endpoints:
+
+- #### Retrieves the list of all places.
+
+  `GET /api/place`
+
+- #### Creates a new place.
+
+  `POST /api/place`
+
+  Exemple JSON body :
+
+  ```json
+  {
+    "type": "restaurant",
+    "name": "Restaurant #1",
+    "address": "123 Main St",
+    "city": "Paris",
+    "zipCode": "75000",
+    "country": "France",
+    "details": {
+      "starCount": 3,
+      "averagePrice": 2,
+      "kitchenType": "french"
+    }
+  }
+  ```
+
+- #### Retrieves the information of a specific place.
+
+  `GET /api/place/:id`
+
+- #### Deletes a place.
+
+  `DELETE /api/place/:id`
+
+- #### Updates the information of a place.
+
+  `PATCH /api/place/:id`
+
+  Exemple JSON body :
+
+  ```json
+  {
+    "type": "restaurant",
+    "name": "New Restaurant Name",
+    "address": "New address",
+    "city": "New city",
+    "zipCode": "75000",
+    "country": "France",
+    "details": {
+      "starCount": 3,
+      "averagePrice": 2,
+      "kitchenType": "italian"
+    }
+  }
+  ```
+
+- #### Allows searching for places using filters.
+
+  `POST /api/place/search`
+
+  Exemple JSON body :
+
+  ```json
+  {
+    "type": "museum",
+    "country": "France",
+    "details": {
+      "artMovement": "cubism",
+      "artType": "sculpture"
+    }
+  }
+  ```
+
+## 📚 Used Libraries
+
+### Here are the libraries used in this application and the reasons for their choice:
+
+  - **React**: JavaScript framework for building user interfaces.
+  - **Next.js**: React framework for server-side rendering and generating static websites.
+  - **Mongoose**: Object Document Mapping (ODM) library for interacting with a MongoDB database.
+  - **Tailwind CSS**: Utility-first CSS library for rapid and flexible design.
+  - **Formik**: Library for managing React forms.
+  - **Axios**: Library for making HTTP requests.
+  - **Headless UI**: Library of accessible and unstyled UI components.
+
+  These libraries were chosen for their features, popularity, ease of use.
