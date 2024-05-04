@@ -1,8 +1,10 @@
 import Input from "@/components/Input"
 import { ErrorMessage, useFormikContext } from "formik"
 
-const FieldInput = ({ name, label, className, ...otherProps }) => {
+const FieldInput = ({ name, subName, label, className, ...otherProps }) => {
   const { values, handleChange } = useFormikContext()
+  const nameString = subName ? [subName, name].join(".") : name
+  const nameValue = values[subName] ? values[subName][name] : values[name]
 
   return (
     <div className={className}>
@@ -14,13 +16,13 @@ const FieldInput = ({ name, label, className, ...otherProps }) => {
 
       <Input
         label={label}
-        name={name}
-        value={values[name]}
+        name={nameString}
+        value={nameValue || null}
         onChange={handleChange}
         {...otherProps}
       />
 
-      <ErrorMessage component="p" className="text-red-600" name={name} />
+      <ErrorMessage component="p" className="text-red-600" name={nameString} />
     </div>
   )
 }

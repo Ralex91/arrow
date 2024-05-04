@@ -10,30 +10,31 @@ import { useEffect, useState } from "react"
 
 const FormPark = ({ enablePrice = true }) => {
   const { values, setFieldValue } = useFormikContext()
-  const [isFree, setIsFree] = useState(false)
+  const [isFree, setIsFree] = useState(values.details?.price === 0)
 
   useEffect(() => {
-    setFieldValue("park.price", isFree ? 0 : values.park?.price || null)
+    setFieldValue("details.price", isFree ? 0 : values.details?.price || null)
     setFieldValue(
-      "park.averagePrice",
-      isFree ? null : values.park?.averagePrice,
+      "details.averagePrice",
+      isFree ? null : values.details?.averagePrice,
     )
-    setFieldValue("park.public", values.park?.public || false)
-  }, [values.park, isFree, setFieldValue])
+    setFieldValue("details.public", values.details?.public || false)
+  }, [values.details, isFree, setFieldValue])
 
   return (
     <>
       <FieldListBox
         name="parkType"
-        subName="park"
+        subName="details"
         label="Park type"
         options={PARK_TYPE_OPTION}
+        empty={true}
       />
 
       <div className="flex gap-2 items-center">
         <Toggle
-          enabled={values.park?.public}
-          onChange={(newValue) => setFieldValue("park.public", newValue)}
+          enabled={values.details?.public}
+          onChange={(newValue) => setFieldValue("details.public", newValue)}
         />
         <p>Public</p>
       </div>
@@ -46,14 +47,20 @@ const FormPark = ({ enablePrice = true }) => {
       {!isFree && (
         <>
           {enablePrice && (
-            <FieldInput label="Price" type="number" name="park.price" />
+            <FieldInput
+              label="Price"
+              type="number"
+              name="price"
+              subName="details"
+            />
           )}
 
           <FieldListBox
             name="averagePrice"
-            subName="park"
+            subName="details"
             label="Average price"
             options={PLACE_AVERAGE_PRICE_OPTION}
+            empty={true}
           />
         </>
       )}

@@ -1,17 +1,5 @@
 import { BAR_TYPE } from "@/features/place/utils/constants"
-import { Schema } from "mongoose"
 import * as yup from "yup"
-
-export const BarSchema = new Schema({
-  barType: {
-    type: String,
-  },
-  averagePrice: {
-    type: Number,
-    min: 1,
-    max: 5,
-  },
-})
 
 export const barSchema = yup
   .object({

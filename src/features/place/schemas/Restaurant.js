@@ -1,23 +1,5 @@
 import { KITCHEN_TYPE } from "@/features/place/utils/constants"
-import { Schema } from "mongoose"
 import * as yup from "yup"
-
-export const RestaurantSchema = new Schema({
-  kitchenType: {
-    type: String,
-    enum: KITCHEN_TYPE,
-  },
-  averagePrice: {
-    type: Number,
-    min: 1,
-    max: 5,
-  },
-  starCount: {
-    type: Number,
-    min: 1,
-    max: 5,
-  },
-})
 
 export const restaurantSchema = yup
   .object({

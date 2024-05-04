@@ -18,6 +18,7 @@ const FormCreate = ({ onSubmit }) => (
     initialValues={{
       ...FORM_INIT_BASE_PLACE,
       type: PLACE_TYPE_OPTION[0].value,
+      details: null,
     }}
     validationSchema={placeSchema}
     onSubmit={onSubmit}
@@ -33,7 +34,7 @@ const FormCreate = ({ onSubmit }) => (
             name="type"
             empty={false}
             options={PLACE_TYPE_OPTION}
-            onChange={(_, oldOption) => setFieldValue(oldOption, undefined)}
+            onChange={() => setFieldValue("details", {})}
           />
 
           {PLACES_FORMS[values.type] &&

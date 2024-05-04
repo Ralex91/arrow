@@ -20,6 +20,29 @@ export const FORM_INIT_BASE_PLACE = {
 
 export const PLACE_TYPES = ["restaurant", "museum", "bar", "park"]
 
+export const PLACE_STAR_RATE = [
+  {
+    label: "1 ⭐",
+    value: 1,
+  },
+  {
+    label: "2 ⭐",
+    value: 2,
+  },
+  {
+    label: "3 ⭐",
+    value: 3,
+  },
+  {
+    label: "4 ⭐",
+    value: 4,
+  },
+  {
+    label: "5 ⭐",
+    value: 5,
+  },
+]
+
 export const KITCHEN_TYPE = [
   "italian",
   "french",

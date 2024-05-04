@@ -18,7 +18,7 @@ const FormSearch = ({ onSubmit }) => (
     }}
     onSubmit={onSubmit}
   >
-    {({ values, setFieldValue }) => (
+    {({ values }) => (
       <Form className="flex flex-col gap-1">
         <FieldInput type="text" name="name" label="Name" />
         <FieldInput type="text" name="city" label="City" />
@@ -28,11 +28,12 @@ const FormSearch = ({ onSubmit }) => (
             name="type"
             empty={true}
             options={PLACE_TYPE_OPTION}
-            onChange={(_, oldOption) => setFieldValue(oldOption, undefined)}
           />
 
           {PLACES_FORMS[values.type] &&
-            createElement(PLACES_FORMS[values.type], { enablePrice: false })}
+            createElement(PLACES_FORMS[values.type], {
+              enablePrice: false,
+            })}
 
           <div className="flex justify-end mt-4">
             <Button className="w-auto" type="submit">

@@ -29,7 +29,7 @@ const FormEdit = ({ onSubmit, defaultValues }) => (
             name="type"
             empty={false}
             options={PLACE_TYPE_OPTION}
-            onChange={(_, oldOption) => setFieldValue(oldOption, undefined)}
+            onChange={() => setFieldValue("details", {})}
           />
 
           {PLACES_FORMS[values.type] &&
