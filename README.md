@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="450" height="120" align="center" src="https://raw.githubusercontent.com/Ralex91/arrow/main/.github/arrow.svg">
+  <img width="450" height="120" align="center" src="https://raw.githubusercontent.com/Ralex91/arrow/master/.github/arrow.svg">
   <br>
   <img align="center" src="https://api.visitorbadge.io/api/visitors?path=https://github.com/Ralex91/arrow/edit/main/README.md&countColor=%2337d67a">
 </p>
