@@ -18,7 +18,7 @@ const DetailsPark = ({ place }) => {
         <p>{PARK_TYPE_OPTION.find((opt) => opt.value === parkType).label}</p>
       </div>
 
-      {Boolean(price) && (
+      {Boolean(price) && averagePrice && (
         <div>
           <p>Average Price</p>
           <p>

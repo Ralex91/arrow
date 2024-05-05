@@ -26,7 +26,7 @@ const DetailsMuseum = ({ place }) => {
         </p>
       </div>
 
-      {Boolean(price) && (
+      {Boolean(price) && averagePrice && (
         <div>
           <p>Average Price</p>
           <p>
